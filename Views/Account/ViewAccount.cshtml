@@ -1,0 +1,31 @@
+@Html.Partial("NavigationBar")
+
+@model bank.Models.Transaction
+
+<h2>@ViewBag.account.AccountName</h2>
+<h4>Current Balance: $@ViewBag.account.Balance</h4>
+<hr>
+<h4>Submit a Transaction</h4>
+<form asp-action="AddTransaction" method="post" class="form-inline">
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" class="form-control">
+    </div>
+    <input type="hidden" name="AccountId" value="@ViewBag.account.AccountId">
+    <input type="submit" value="Submit" class="btn btn-success">
+    <span class="rederror">@TempData["transError"]</span>
+</form>
+<hr>
+<table class="table table-striped">
+    <tr>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+        @foreach (var t in ViewBag.transactions)
+        {
+            <tr>
+                <td>@t.Amount</td>
+                <td>@t.CreatedAt</td>
+            </tr>
+        }
+</table>
